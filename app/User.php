@@ -38,7 +38,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // public function messages(){
+    //     return $this->hasMany(Message::class,'from');
+    // }
     public function messages(){
-        return $this->hasMany(User::class,'from');
+        return $this->hasMany(Message::class,'from');
     }
 }

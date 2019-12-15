@@ -8,7 +8,10 @@ class Message extends Model
 {
     protected $guarded =[];
 
+    // public function user(){
+    // 	return $this->belongsTo(User::class,'from');
+    // }
     public function user(){
-    	return $this->belongsTo(Message::class,'from');
+        return $this->belongsTo(User::class,'from');
     }
 }
