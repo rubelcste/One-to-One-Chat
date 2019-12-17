@@ -54,7 +54,9 @@
       </div>
 
       <div class="chat-message clearfix">
-        <textarea @keypress.enter="sendMessage" v-model="message" name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
+        <p v-if="typing">{{typing}} typing...</p>
+        <textarea v-if="userMessage.user" @keydown="typeingEvent(userMessage.user.id)" @keypress.enter="sendMessage" v-model="message" name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
+        <textarea v-else disabled name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
 
         <a class="ml-3" href=""></a><i class="fa fa-file"></i>
         <a class="ml-3" href=""></a><i class="fa fa-file-image-o"></i>
@@ -76,10 +78,21 @@ export default {
        this.selectUser(e.message.from);
     });
     this.$store.dispatch('userList');
+
+    Echo.private('typingevent')
+    .listenForWhisper('typing', (e) => {
+      if(e.user.id==this.userMessage.user.id && e.userId == authuser.id){
+        this.typing = e.user.name;
+      }
+        setTimeout(() => {
+          this.typing = '';
+        }, 3000);
+    });
   },
   data(){
     return{
-      message:[],
+      message:'',
+      typing:'' 
     }
   },
   computed:{
@@ -116,6 +129,14 @@ export default {
       axios.get(`/deleteallmessage/${this.userMessage.user.id}`)
       .then(response=>{
         this.selectUser(this.userMessage.user.id);
+      });
+    },
+    typeingEvent(userId){
+      Echo.private('typingevent')
+      .whisper('typing', {
+          'user': authuser,
+          'typing':this.message,
+          'userId':userId
       });
     }
   }
