@@ -26,7 +26,7 @@
             <span class="dropdown-toggle" id="dropId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              &nbsp;&nbsp;&nbsp;...</span>
             <div class="dropdown-menu" aria-labelledby="dropId">
-              <a class="dropdown-item text-danger" href="#">Delete All Message</a>
+              <a @click.prevent="deleteAllMessage" class="dropdown-item text-danger" href="#">Delete All Message</a>
             </div>
           </div>
         </div>
@@ -103,11 +103,13 @@ export default {
       }
     },
     deleteMessage(messageId){
-      // axios.get(`/deletemessage/${messageId}`)
-      // .then(response=>{
-      //   this.selectUser(this.userMessage.user.id);
-      // });
       axios.get(`/deletemessage/${messageId}`)
+      .then(response=>{
+        this.selectUser(this.userMessage.user.id);
+      });
+    },
+    deleteAllMessage(){
+      axios.get(`/deleteallmessage/${this.userMessage.user.id}`)
       .then(response=>{
         this.selectUser(this.userMessage.user.id);
       });

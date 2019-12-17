@@ -11,3 +11,4 @@ Route::get('userlist', 'MessageController@user_list')->name('user.list');
 Route::get('usermessage/{id}', 'MessageController@user_message')->name('user.message');
 Route::post('sendmessage', 'MessageController@send_message')->name('user.message.send');
 Route::get('deletemessage/{id}', 'MessageController@delete_message')->name('user.message.delete');
+Route::get('deleteallmessage/{id}', 'MessageController@delete_all_message')->name('user.all.message.delete');

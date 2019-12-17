@@ -1948,12 +1948,15 @@ __webpack_require__.r(__webpack_exports__);
     deleteMessage: function deleteMessage(messageId) {
       var _this2 = this;
 
-      // axios.get(`/deletemessage/${messageId}`)
-      // .then(response=>{
-      //   this.selectUser(this.userMessage.user.id);
-      // });
       axios.get("/deletemessage/".concat(messageId)).then(function (response) {
         _this2.selectUser(_this2.userMessage.user.id);
+      });
+    },
+    deleteAllMessage: function deleteAllMessage() {
+      var _this3 = this;
+
+      axios.get("/deleteallmessage/".concat(this.userMessage.user.id)).then(function (response) {
+        _this3.selectUser(_this3.userMessage.user.id);
       });
     }
   }
@@ -55129,7 +55132,45 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm._m(2)
+          _c("div", { staticClass: "dropdown d-inline float-right" }, [
+            _c(
+              "span",
+              {
+                staticClass: "dropdown-toggle",
+                attrs: {
+                  id: "dropId",
+                  "data-toggle": "dropdown",
+                  "aria-haspopup": "true",
+                  "aria-expanded": "false"
+                }
+              },
+              [_vm._v("\n              ...")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu",
+                attrs: { "aria-labelledby": "dropId" }
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "dropdown-item text-danger",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.deleteAllMessage($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete All Message")]
+                )
+              ]
+            )
+          ])
         ]),
         _vm._v(" "),
         _c("i", { staticClass: "fa fa-star" })
@@ -55292,41 +55333,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "status" }, [
       _c("i", { staticClass: "fa fa-circle online" }),
       _vm._v(" online\n          ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown d-inline float-right" }, [
-      _c(
-        "span",
-        {
-          staticClass: "dropdown-toggle",
-          attrs: {
-            id: "dropId",
-            "data-toggle": "dropdown",
-            "aria-haspopup": "true",
-            "aria-expanded": "false"
-          }
-        },
-        [_vm._v("\n              ...")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "dropdown-menu",
-          attrs: { "aria-labelledby": "dropId" }
-        },
-        [
-          _c(
-            "a",
-            { staticClass: "dropdown-item text-danger", attrs: { href: "#" } },
-            [_vm._v("Delete All Message")]
-          )
-        ]
-      )
     ])
   }
 ]
