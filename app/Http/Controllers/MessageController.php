@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSend;
 use App\Message;
 use App\User;
 use Illuminate\Http\Request;
@@ -122,6 +123,7 @@ class MessageController extends Controller
            'to'=>$request->user_id,
            'type'=>1
        ]);
+        broadcast(new MessageSend($messages));
         return response()->json($messages,201);
     }
     public function delete_message($id=null){

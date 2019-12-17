@@ -71,6 +71,10 @@
 <script>
 export default {
   mounted(){
+    Echo.private(`chat.${authuser.id}`)
+    .listen('MessageSend', (e) => {
+       this.selectUser(e.message.from);
+    });
     this.$store.dispatch('userList');
   },
   data(){
